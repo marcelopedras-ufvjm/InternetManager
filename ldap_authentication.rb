@@ -7,7 +7,7 @@ server_ip_address = '192.168.1.17'
                      # :auth => {
                      #     :method => :simple,
                      #     :username => "cn=admin,dc=ict,dc=ufvjm",
-                     #     :password => "mozila79"
+                     #     :password => "xxxxxx"
                      # }
 #
 # filter = Net::LDAP::Filter.eq( "cn", "carol" )
@@ -45,4 +45,4 @@ Net::LDAP.new :host => server_ip_address,
 end
 
 result= autentica('carolfdas','mozila79')
-p result.auth('carol', 'mozila79')
+p result.auth('carol', 'xxxxxxx')
