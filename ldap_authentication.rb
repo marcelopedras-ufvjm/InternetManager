@@ -44,5 +44,5 @@ Net::LDAP.new :host => server_ip_address,
 
 end
 
-result= autentica('carolfdas','mozila79')
+result= autentica('carolfdas','xxxxxx')
 p result.auth('carol', 'xxxxxxx')
