@@ -8,7 +8,7 @@ server_ip_address = '192.168.1.17'
 #                      :auth => {
 #                          :method => :simple,
 #                          :username => "cn=admin,dc=ict,dc=ufvjm",
-#                          :password => "meu password"
+#                          :password => "meu_password"
 #                      }
 #
 # filter = Net::LDAP::Filter.eq( "cn", "carol" )
@@ -36,55 +36,71 @@ class MyLdapSearch
     @auth = {
         :method => :simple,
         :username => "cn=admin,dc=ict,dc=ufvjm",
-        :password => "meu password"
+        :password => "meu_password"
     }
     @ldap = Net::LDAP.new :host => @host,
-                                 :port => @port,
-                                 :auth => @auth
+                          :port => @port,
+                          :auth => @auth
 
   end
 
-def ldap_search(user)
-
-  filter = Net::LDAP::Filter.eq( "cn", user )
-
-
-  @ldap.search( :base => @base, :filter => filter ) do |entry|
-    puts "DN: #{entry.dn}"
-    entry.each do |attribute, values|
-      puts "   #{attribute}:"
-      values.each do |value|
-        puts "      --->#{value}"
+  def search(filter)
+    @ldap.search(:base => @base, :filter => filter) do |entry|
+      puts "DN: #{entry.dn}"
+      entry.each do |attribute, values|
+        puts "   #{attribute}:"
+        values.each do |value|
+          puts "      --->#{value}"
+        end
       end
+    end
+
+    p @ldap.get_operation_result
+  end
+  def ldap_search_by_user(user)
+
+    filter = Net::LDAP::Filter.eq("cn", user)
+    search(filter)
+
+
+
+  end
+
+  def ldap_authenticate(user, password)
+
+
+    result = @ldap.bind_as(
+        base: @base,
+        filter: "uid=#{user}",
+        password: password
+    )
+
+    if result
+      puts "Authenticated #{result.first.dn}"
+      #puts "Result: #{ldap.get_operation_result.code}"
+      #puts "Message: #{ldap.get_operation_result.message}"
+      puts @ldap.get_operation_result
+      true
+    else
+      puts "Authentication FAILED."
+      false
     end
   end
 
-  p @ldap.get_operation_result
-end
+  def search_by_group(group)
+    filter =
+        Net::LDAP::Filter.eq("objectclass","inetOrgPerson") &
+        Net::LDAP::Filter.eq("memberOf", "cn=#{group},ou=Groups,dc=ict,dc=ufvjm")
 
-def ldap_authenticate(user,password)
 
 
-  result = @ldap.bind_as(
-    base: @base,
-    filter: "uid=#{user}",
-    password: password
-  )
+    search(filter)
 
-  if result
-    puts "Authenticated #{result.first.dn}"
-    #puts "Result: #{ldap.get_operation_result.code}"
-    #puts "Message: #{ldap.get_operation_result.message}"
-    puts @ldap.get_operation_result
-    true
-  else
-    puts "Authentication FAILED."
-    false
   end
-end
 
 end
 
 ldap = MyLdapSearch.new
-#ldap.ldap_authenticate('carol','meu password')
-ldap.ldap_search('carol')
+#ldap.ldap_authenticate('carol','meu_password')
+#ldap.ldap_search_by_user('carol')
+ldap.search_by_group('alunos')
