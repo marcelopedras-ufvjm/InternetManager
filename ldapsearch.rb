@@ -2,31 +2,6 @@ require 'rubygems'
 require 'net/ldap'
 require 'pp'
 
-#server_ip_address = '192.168.1.17'
-# ldap = Net::LDAP.new :host => server_ip_address,
-#                     :port => 389,
-#                      :auth => {
-#                          :method => :simple,
-#                          :username => "cn=admin,dc=ict,dc=ufvjm",
-#                          :password => "meu_password"
-#                      }
-#
-# filter = Net::LDAP::Filter.eq( "cn", "carol" )
-# treebase = "dc=ict,dc=ufvjm"
-#
-# ldap.search( :base => treebase, :filter => filter ) do |entry|
-#   puts "DN: #{entry.dn}"
-#   entry.each do |attribute, values|
-#     puts "   #{attribute}:"
-#     values.each do |value|
-#       puts "      --->#{value}"
-#     end
-#   end
-# end
-#
-# p ldap.get_operation_result
-
-
 class LdapSearch
 
   def initialize
@@ -34,14 +9,14 @@ class LdapSearch
     @base = 'ou=Users,dc=ict,dc=ufvjm'
     @host = '192.168.1.17'
     @port = 389
-    @auth = {
-        :method => :simple,
-        :username => "cn=admin,dc=ict,dc=ufvjm",
-        :password => "meu_password"
-    }
+    # @auth = {
+    #     :method => :simple,
+    #     :username => "cn=admin,dc=ict,dc=ufvjm",
+    #     :password => "meu_password"
+    #}
     @ldap = Net::LDAP.new :host => @host,
-                          :port => @port,
-                          :auth => @auth
+                          :port => @port #,
+                          #:auth => @auth
   end
 
   def group_filter(group)
@@ -127,8 +102,5 @@ class LdapSearch
   end
 end
 
-ldap = LdapSearch.new
 
-ldap.authenticate('marcelopedras','meu_password','ICT_admins_labs')
-#ldap.ldap_search_by_user('carol')
-#ldap.search_by_group('ICT_admin_labs')
+
