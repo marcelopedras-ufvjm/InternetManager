@@ -41,16 +41,24 @@ class LdapSearch
 
 
   def search(filter)
+    result = Hash.new
     @ldap.search(:base => @base, :filter => filter) do |entry|
       puts "DN: #{entry.dn}"
       entry.each do |attribute, values|
-        puts "   #{attribute}:"
-        values.each do |value|
-          puts "      --->#{value}"
-        end
+          #puts "   #{attribute}:"
+          result[attribute] = Array.new
+          if values.size > 1
+            values.each do |value|
+              #puts "      --->#{value}"
+              result[attribute].push(value)
+            end
+          else
+            result[attribute] = values.first
+          end
       end
     end
     #p @ldap.get_operation_result
+    result
   end
 
   def search_by_user(user,group = nil)

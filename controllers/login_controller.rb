@@ -1,4 +1,3 @@
-#require 'sinatra/base'
 require 'application_controller'
 
 class App::LoginController < App::ApplicationController

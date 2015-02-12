@@ -1,9 +1,10 @@
 require 'sinatra/base'
-#require 'logger'
+require 'logger'
 require 'active_support/lazy_load_hooks'
 require 'active_support/core_ext/string'
 
 $: << './controllers/'
+$: << './lib/'
 
 class App < Sinatra::Base
 
@@ -13,17 +14,17 @@ class App < Sinatra::Base
      use file_class.classify.constantize
    end
 
-  # Dir.glob('./controllers/*.rb').each { |file|
-  #   logger =Logger.new(STDOUT)
-  #   logger.info(file)
-  #   require file
-  # }
-
    # get '/login' do
    #   'test'
    # end
 
-  #$: << './controllers/'
-  #Dir.glob('./{controllers}/*.rb').each {|file| require file }
+  # $: << './controllers/'
+  # Dir.glob('./{controllers}/*.rb').each {|file|
+  #   #logger.info(file)
+  #   require file
+  # }
+  #
+  # use LoginController
+  # use InternetController
 
 end
