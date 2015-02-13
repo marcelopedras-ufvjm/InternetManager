@@ -1,9 +1,22 @@
-#require 'rubygems'
+require 'sinatra/base'
+require 'logger'
 require 'bundler'
 
 Bundler.require
 
-require './app'
+$: << './controllers/'
+$: << './lib/'
+$: << '.'
 
-run App
+Dir.glob('./{controllers,lib}/*.rb').each {|file|
+ #logger.info(file)
+ require file
+}
+
+#require './app.rb'
+
+run Rack::URLMap.new({
+                         "/ldap" => InternetController,
+                         "/login" => LoginController
+                     })
 

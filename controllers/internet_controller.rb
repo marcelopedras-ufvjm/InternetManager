@@ -3,7 +3,7 @@ require 'log'
 require 'ldapsearch'
 require 'json'
 
-class App::InternetController < App::ApplicationController
+class InternetController < ApplicationController
   get '/internet' do
     Log.instance.info('teste')
     'internet'
@@ -14,7 +14,6 @@ class App::InternetController < App::ApplicationController
     group = params[:group]
     ldap = LdapSearch.new
     result = ldap.search_by_group group
-    puts result[1]
     result.to_json
   end
 end
