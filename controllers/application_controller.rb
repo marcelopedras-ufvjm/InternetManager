@@ -17,4 +17,16 @@ class ApplicationController < App
   get '/foo' do
     'foo'
   end
+
+  get '/twitter_template.html' do
+    #content_type :html
+    #erb :twitter_template
+  end
+
+  get '/' do
+    erb :index
+    #erb :'public/app/index'
+    #content_type :html
+    #erb :twitter_template
+  end
 end
