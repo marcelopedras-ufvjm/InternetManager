@@ -1,13 +1,12 @@
-<div class="well col-lg-4 col-lg-offset-4">
-<form class="form form-horizontal">
-    <div class="form-group">
-        <input data-ng-model="myCtrl.attributes.login" type="text" placeholder="username" class="form-control"/>
-    </div>
-    <div class="form-group">
-        <input data-ng-model="myCtrl.attributes.password" type="password" placeholder="password" class="form-control"/>
-    </div>
-    <div class="form-group">
-        <button data-ng-click="myCtrl.sign()" type="submit" class="btn btn-primary" >Sign</button>
-    </div>
-</form>
+<div class="well ">
+    <form class="form-inline col-lg-offset-7">
+        <input data-ng-model="myCtrl.attributes.login" type="text" placeholder="username" class="input-small"/>
+        <input data-ng-model="myCtrl.attributes.password" type="password" placeholder="password" class="input-small"/>
+        <button data-ng-click="myCtrl.sign()" type="submit" class="btn btn-primary">Sign</button>
+        <button data-ng-click="myCtrl.authenticate_by_token()" type="button" class="btn btn-primary">authenticate_by_token</button>
+        <button data-ng-click="myCtrl.logout()" type="button" class="btn btn-primary">logout</button>
+    </form>
+</div>
+<div data-ng-controller="InternetLabsController as myCtrl" data-ng-include="'/app/views/list_labs.html'">
+
 </div>

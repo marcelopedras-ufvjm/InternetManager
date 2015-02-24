@@ -5,10 +5,11 @@ require 'bundler'
 Bundler.require
 
 $: << './controllers/'
+$: << './models/'
 $: << './lib/'
 $: << '.'
 
-Dir.glob('./{controllers,lib}/*.rb').each {|file|
+Dir.glob('./{controllers,models,lib}/*.rb').each {|file|
  #logger.info(file)
  require file
 }

@@ -1,0 +1,38 @@
+<div data-ng-controller="LoginController as myCtrl">
+    <div data-ng-include="myCtrl.logout_path()"></div>
+</div>
+<h1>Laboratórios ICT</h1>
+<table class="table table-striped">
+    <caption>Tabela com o status da internet em cada laboratório. Contém informações de número da sala do laboratório, se a internet está disponível e se, caso não esteja, quem a bloqueou.</caption>
+    <thead>
+    <tr>
+        <th>Laboratório</th>
+        <th>Sala</th>
+        <th>Bloqueada por</th>
+        <th>De</th>
+        <th>Até</th>
+        <th>Status Internet</th>
+    </tr>
+    </thead>
+    <tbody>
+        <tr data-ng-repeat="lab in myCtrl.labs">
+            <td>
+                {{lab.numero}}
+            </td>
+            <td>
+                {{lab.sala}}
+            </td>
+            <td>
+                {{lab.by}}
+            </td>
+            <td>
+                {{lab.start_time}}
+            </td>
+            <td>
+                {{lab.end_time}}
+            </td>
+            <td data-ng-include="myCtrl.editable()"></td>
+        </tr>
+    </tbody>
+</table>
+

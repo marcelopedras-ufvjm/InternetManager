@@ -4,11 +4,26 @@ require 'pp'
 
 class LdapSearch
 
-  def initialize
+  def initialize(params = {})
+    p = {
+      base: 'dc=ict,dc=ufvjm',
+      host: '192.168.1.17',
+      port: 389,
+      user_base: 'ou=Users,dc=ict,dc=ufvjm',
+      group_base: 'ou=Groups,dc=ict,dc=ufvjm'
+    }.merge(params)
 
-    @base = 'ou=Users,dc=ict,dc=ufvjm'
-    @host = '192.168.1.17'
-    @port = 389
+
+    # @base = 'ou=Users,dc=ict,dc=ufvjm'
+    # @host = '192.168.1.17'
+    # @port = 389
+
+    @base       = p[:base]
+    @host       = p[:host]
+    @port       = p[:port]
+    @user_base  = p[:user_base]
+    @group_base = p[:group_base]
+
     # @auth = {
     #     :method => :simple,
     #     :username => "cn=admin,dc=ict,dc=ufvjm",
@@ -20,7 +35,7 @@ class LdapSearch
   end
 
   def group_filter(group)
-    Net::LDAP::Filter.eq("memberOf", "cn=#{group},ou=Groups,dc=ict,dc=ufvjm") if group
+    Net::LDAP::Filter.eq("memberOf", "cn=#{group},#{@group_base}") if group
   end
 
   def person_filter
@@ -41,10 +56,8 @@ class LdapSearch
 
 
   def search(filter)
-
-
-    resultSet = Array.new
-    @ldap.search(:base => @base, :filter => filter) do |entry|
+    result_set = Array.new
+    @ldap.search(:base => @user_base, :filter => filter) do |entry|
       #puts "DN: #{entry.dn}"
       result = Hash.new
       entry.each do |attribute, values|
@@ -59,10 +72,10 @@ class LdapSearch
             result[attribute] = values.first
           end
       end
-      resultSet.push(result)
+      result_set.push(result)
     end
     #p @ldap.get_operation_result
-    resultSet
+    result_set
   end
 
   def search_by_user(user,group = nil)
@@ -96,7 +109,7 @@ class LdapSearch
     end
 
     result = @ldap.bind_as(
-        base: @base,
+        base: @user_base,
         filter: filter,
         password: password
     )

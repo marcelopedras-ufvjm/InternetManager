@@ -1714,7 +1714,7 @@ function setupModuleLoader(window) {
      *
      * # Module
      *
-     * A module is a collection of services, directives, controllers, filters, and configuration information.
+     * A module is a collection of services, directives, modules, filters, and configuration information.
      * `angular.module` is used to configure the {@link auto.$injector $injector}.
      *
      * ```js
@@ -1912,7 +1912,7 @@ function setupModuleLoader(window) {
            * @ngdoc method
            * @name angular.Module#controller
            * @module ng
-           * @param {string|Object} name Controller name, or an object map of controllers where the
+           * @param {string|Object} name Controller name, or an object map of modules where the
            *    keys are the names and the values are the constructors.
            * @param {Function} constructor Controller constructor function.
            * @description
@@ -2696,7 +2696,7 @@ function jqLiteInheritedData(element, name, value) {
 
     // If dealing with a document fragment node with a host element, and no parent, use the host
     // element as the parent. This enables directives within a Shadow DOM or polyfilled Shadow DOM
-    // to lookup parent controllers.
+    // to lookup parent modules.
     element = element.parentNode || (element.nodeType === NODE_TYPE_DOCUMENT_FRAGMENT && element.host);
   }
 }
@@ -6099,11 +6099,11 @@ function $TemplateCacheProvider() {
  *
  *   * `controller` - a controller instance - A controller instance if at least one directive on the
  *     element defines a controller. The controller is shared among all the directives, which allows
- *     the directives to use the controllers as a communication channel.
+ *     the directives to use the modules as a communication channel.
  *
  *   * `transcludeFn` - A transclude linking function pre-bound to the correct transclusion scope.
  *     This is the same as the `$transclude`
- *     parameter of directive controllers, see there for details.
+ *     parameter of directive modules, see there for details.
  *     `function([scope], cloneLinkingFn, futureParentElement)`.
  *
  * #### Pre-linking function
@@ -6366,7 +6366,7 @@ function $TemplateCacheProvider() {
  *        directives; if given, it will be passed through to the link functions of
  *        directives found in `element` during compilation.
  *      * `transcludeControllers` - an object hash with keys that map controller names
- *        to controller instances; if given, it will make the controllers
+ *        to controller instances; if given, it will make the modules
  *        available to directives.
  *      * `futureParentElement` - defines the parent to which the `cloneAttachFn` will add
  *        the cloned elements; only needed for transcludes that are allowed to contain non html
@@ -7365,7 +7365,7 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
             childTranscludeFn = compile($template, transcludeFn, terminalPriority,
                                         replaceDirective && replaceDirective.name, {
                                           // Don't pass in:
-                                          // - controllerDirectives - otherwise we'll create duplicates controllers
+                                          // - controllerDirectives - otherwise we'll create duplicates modules
                                           // - newIsolateScopeDirective or templateDirective - combining templates with
                                           //   element transclusion doesn't make sense.
                                           //
@@ -7573,7 +7573,7 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
         }
 
         if (controllerDirectives) {
-          // TODO: merge `controllers` and `elementControllers` into single object.
+          // TODO: merge `modules` and `elementControllers` into single object.
           controllers = {};
           elementControllers = {};
           forEach(controllerDirectives, function(directive) {
@@ -7594,7 +7594,7 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
             // For directives with element transclusion the element is a comment,
             // but jQuery .data doesn't support attaching data to comment nodes as it's hard to
             // clean up (http://bugs.jquery.com/ticket/8335).
-            // Instead, we save the controllers for the element in a local hash and attach to .data
+            // Instead, we save the modules for the element in a local hash and attach to .data
             // later, once we have the actual element.
             elementControllers[directive.name] = controllerInstance;
             if (!hasElementTranscludeDirective) {
@@ -8325,7 +8325,7 @@ function removeComments(jqNodes) {
  * @name $controllerProvider
  * @description
  * The {@link ng.$controller $controller service} is used by Angular to create new
- * controllers.
+ * modules.
  *
  * This provider allows controller registration via the
  * {@link ng.$controllerProvider#register register} method.
@@ -8339,7 +8339,7 @@ function $ControllerProvider() {
   /**
    * @ngdoc method
    * @name $controllerProvider#register
-   * @param {string|Object} name Controller name, or an object map of controllers where the keys are
+   * @param {string|Object} name Controller name, or an object map of modules where the keys are
    *    the names and the values are the constructors.
    * @param {Function|Array} constructor Controller constructor fn (optionally decorated with DI
    *    annotations in the array notation).
@@ -8387,7 +8387,7 @@ function $ControllerProvider() {
      * @return {Object} Instance of given controller.
      *
      * @description
-     * `$controller` service is responsible for instantiating controllers.
+     * `$controller` service is responsible for instantiating modules.
      *
      * It's just a simple call to {@link auto.$injector $injector}, but extracted into
      * a service, so that one can override this service with [BC version](https://gist.github.com/1649788).
@@ -14131,7 +14131,7 @@ function $RootScopeProvider() {
        * iterations exceeds 10.
        *
        * Usually, you don't call `$digest()` directly in
-       * {@link ng.directive:ngController controllers} or in
+       * {@link ng.directive:ngController modules} or in
        * {@link ng.$compileProvider#directive directives}.
        * Instead, you should call {@link ng.$rootScope.Scope#$apply $apply()} (typically from within
        * a {@link ng.$compileProvider#directive directive}), which will force a `$digest()`.
@@ -20933,7 +20933,7 @@ var ngCloakDirective = ngDirective({
  * * Controller — The `ngController` directive specifies a Controller class; the class contains business
  *   logic behind the application to decorate the scope with functions and values
  *
- * Note that you can also attach controllers to the DOM by declaring it in a route definition
+ * Note that you can also attach modules to the DOM by declaring it in a route definition
  * via the {@link ngRoute.$route $route} service. A common mistake is to declare the controller
  * again using `ng-controller` in the template itself.  This will cause the controller to be attached
  * and executed twice.
@@ -20970,8 +20970,8 @@ var ngCloakDirective = ngDirective({
  * and avoiding scope.
  *
  * * Using `controller as` makes it obvious which controller you are accessing in the template when
- * multiple controllers apply to an element.
- * * If you are writing your controllers as classes you have easier access to the properties and
+ * multiple modules apply to an element.
+ * * If you are writing your modules as classes you have easier access to the properties and
  * methods, which will appear on the scope, from inside the controller code.
  * * Since there is always a `.` in the bindings, you don't have to worry about prototypal
  * inheritance masking primitives.
@@ -22165,7 +22165,7 @@ var ngIncludeDirective = ['$templateRequest', '$anchorScroll', '$animate', '$sce
               ctrl.template = response;
 
               // Note: This will also link all children of ng-include that were contained in the original
-              // html. If that content contains controllers, ... they could pollute/change the scope.
+              // html. If that content contains modules, ... they could pollute/change the scope.
               // However, using ng-include on an element with additional content does not make sense...
               // Note: We can't remove them in the cloneAttchFn of $transclude as that
               // function is called before linking the content, which would apply child
@@ -22239,7 +22239,7 @@ var ngIncludeFillContentDirective = ['$compile',
  * <div class="alert alert-error">
  * The only appropriate use of `ngInit` is for aliasing special properties of
  * {@link ng.directive:ngRepeat `ngRepeat`}, as seen in the demo below. Besides this case, you
- * should use {@link guide/controller controllers} rather than `ngInit`
+ * should use {@link guide/controller modules} rather than `ngInit`
  * to initialize values on a scope.
  * </div>
  * <div class="alert alert-warning">
@@ -22494,7 +22494,7 @@ is set to `true`. The parse error is stored in `ngModel.$error.parse`.
  *      is delivered then the validation status will be set to true when fulfilled and false when rejected.
  *      When the asynchronous validators are triggered, each of the validators will run in parallel and the model
  *      value will only be updated once all validators have been fulfilled. As long as an asynchronous validator
- *      is unfulfilled, its key will be added to the controllers `$pending` property. Also, all asynchronous validators
+ *      is unfulfilled, its key will be added to the modules `$pending` property. Also, all asynchronous validators
  *      will only run once all synchronous validators have passed.
  *
  * Please note that if $http is used then it is important that the server returns a success HTTP response code
@@ -23492,7 +23492,7 @@ var DEFAULT_REGEXP = /(\s+|^)default(\s+|$)/;
  *
  * The easiest way to reference the control's {@link ngModel.NgModelController `$rollbackViewValue`}
  * method is by making sure the input is placed inside a form that has a `name` attribute. This is
- * important because `form` controllers are published to the related scope under the name in their
+ * important because `form` modules are published to the related scope under the name in their
  * `name` attribute.
  *
  * Any pending changes will take place immediately when an enclosing form is submitted via the
