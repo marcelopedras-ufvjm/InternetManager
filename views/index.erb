@@ -17,7 +17,10 @@
   <![endif]-->
 </head>
 <body ng-app="mainApp">
-
+<div data-ng-controller="LoginController as myCtrl">
+  <div data-ng-include="myCtrl.logout_path()"></div>
+  <div data-ng-include="myCtrl.login_path()"></div>
+</div>
 <div class="container" data-ng-view></div>
 
 
@@ -31,6 +34,9 @@
 <script src="/app/modules/login/login_controller.js"></script>
 <script src="/app/modules/internet_labs/internet_labs_controller.js"></script>
 <script src="/app/modules/login/login_service.js"></script>
+<script src="/app/modules/login/login_interceptor.js"></script>
+<script src="/app/modules/login/login_status_service.js"></script>
+
 
 
 </body>

@@ -16,13 +16,14 @@ class ApplicationController < App
     /login/sign
     /login/logout
     /login/authenticate_by_token
-    /
     /data
+    /
     "
 
     unless skip_check_token_paths.include? request.path
-      token = params['token']
+      token = env['HTTP_AUTH_BY_TOKEN'] #params['token']
       unless token && User.authenticate_by_token(token)
+        content_type :json
         resp = {
             'authenticated' => false,
             'error' => 'Invalid or expired token. Try sign again'

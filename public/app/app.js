@@ -3,16 +3,16 @@ var mainApp = angular.module('mainApp',['ngRoute'])
     .config(['$routeProvider', function($routeProvider) {
         $routeProvider
             .when('/', {
-                templateUrl: '/app/views/login.html',
-                controller: 'LoginController',
-                controllerAs : 'myCtrl'
-
-            })
-            .when('/labs',{
                 templateUrl: '/app/views/list_labs.html',
                 controller: 'InternetLabsController',
                 controllerAs : 'myCtrl'
-            });
+
+            })
+            //.when('/labs',{
+            //    templateUrl: '/app/views/list_labs.html',
+            //    controller: 'InternetLabsController',
+            //    controllerAs : 'myCtrl'
+            //});
     }])
     .config(['$httpProvider', function($httpProvider) {
 // Every POST data becomes jQuery style
@@ -31,6 +31,7 @@ var mainApp = angular.module('mainApp',['ngRoute'])
                 }
                 return requestStr;
             });
+
 // Set the content type to be FORM type for all post requests
 // This does not add it for GET requests.
         $httpProvider.defaults.headers.post['Content-Type'] =

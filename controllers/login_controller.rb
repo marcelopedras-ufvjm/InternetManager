@@ -19,6 +19,7 @@ class LoginController < ApplicationController
     if u
       resp['authenticated'] = true
       resp['token'] = u.token
+      resp['user'] = u.username
     else
       halt(401,resp.to_json)
     end
@@ -48,6 +49,7 @@ class LoginController < ApplicationController
     if u
       resp['authenticated'] = true
       resp['token'] = u.token
+      resp['user'] = u.username
     else
       resp['error'] = 'Invalid or expired token. Try sign again'
       halt(401,resp.to_json)
@@ -55,11 +57,11 @@ class LoginController < ApplicationController
     resp.to_json
   end
 
-  get '/authenticated' do
-    content_type :json
-    result = authorized?
-    {authenticated: result}.to_json
-  end
+  # get '/authenticated' do
+  #   content_type :json
+  #   result = authorized?
+  #   {authenticated: result}.to_json
+  # end
 
   post '/test' do
     data = params
