@@ -1,11 +1,99 @@
 /**
  * Created by marcelo on 17/02/15.
  */
-mainApp.controller('InternetLabsController',['$http','$location','loginSession',function($http,$location,loginSession){
+mainApp.controller('InternetLabsController',['$http','$location','loginSession','connectionManager',function($http,$location,loginSession,connectionManager){
     console.log('InternetLabsController criado')
     var self = this;
+    var form_off = '/app/views/form_internet_off.html';
+    var form_off_data = {
+        id: '',
+        lab: '',
+        order: undefined,
+        start_time: undefined,
+        end_time: undefined
+    };
+
+    var time_pattern = /^(?:(?:([01]?\d|2[0-3]):)?([0-5]?\d):)?([0-5]?\d)$/;
+
+    var downConnection = function() {
+        var lab = retrieveLab(form_off_data.order);
+        lab.internet = false;
+        lab.start_time = form_off_data.start_time;
+        lab.end_time = form_off_data.end_time;
+        lab.by = loginSession.getUser();
+        persist(lab);
+    };
+
+    var upConnection = function(l) {
+        var lab = retrieveLab(l);
+        lab.internet = true;
+        lab.start_time = 'n/a';
+        lab.end_time = 'n/a';
+        lab.by = loginSession.getUser();
+        persist(lab);
+    };
+
+    var showForm = function() {
+        $('#myModal').modal('show');
+    };
+
+    var hideForm = function() {
+        $('#myModal').modal('hide');
+    };
+
+    var initForm = function(labObj) {
+        t=Time();
+        form_off_data.start_time = t.to_s();
+        form_off_data.end_time = t.addHour(1).to_s();
+        form_off_data.lab = labObj.room_name;
+        form_off_data.id = labObj.id;
+        form_off_data.order = labObj.order;
+    };
+
+
+    var retrieveLab = function(lab) {
+        return self.labs[lab];
+    };
+
+    var Time = function() {
+        var d = new Date();
+        var h = d.getHours();
+        var m = d.getMinutes();
+        var s = d.getSeconds();
+        var obj = {
+            to_s: function() {
+                var r = h + ":" + m + ":" + s
+                return r;
+            },
+            addHour : function(hour) {
+                h = h + hour;
+                return obj;
+            },
+
+            subHour : function(hour) {
+                h = h - hour;
+                return obj;
+            }
+        };
+
+        return obj;
+    };
+
+    var persist = function(lab) {
+        //    id: c.id,
+        //    internet: c.internet,
+        //    start_time: c.start_time,
+        //    end_time: c.end_time,
+        //    username: c.username
+        connectionManager.setConnection(lab)
+    };
+
 
     self.labs = [];
+
+    self.getFormData = function() {
+        return form_off_data;
+    };
 
     self.editable = function() {
         if(loginSession.isLoggedIn()) {
@@ -16,11 +104,6 @@ mainApp.controller('InternetLabsController',['$http','$location','loginSession',
 
         return self.partial;
     };
-
-    var retrieveLab = function(lab) {
-        return self.labs[lab-1];
-    };
-
 
     self.markAsOn = function(lab) {
         var status = retrieveLab(lab).internet;
@@ -39,20 +122,36 @@ mainApp.controller('InternetLabsController',['$http','$location','loginSession',
         }
     };
 
-    self.turnOn = function(lab) {
-        var l = retrieveLab(lab);
-        l.internet = true;
-        console.log(retrieveLab(lab).internet);
+    self.turnOn = function(labOrder) {
+        upConnection(labOrder);
+        console.log(retrieveLab(labOrder).internet);
     };
 
     self.turnOff = function(lab) {
         var l = retrieveLab(lab);
-        l.internet = false;
+        initForm(l);
+        showForm();
         console.log(retrieveLab(lab).internet);
     };
 
-    $http.get('/data').then(function(response){
-        self.labs = response.data;
-    }, function(error){});
+    self.applyConnectionChanges = function() {
+        downConnection();
+        hideForm();
+    };
+
+
+
+    self.modal_path = function() {
+        return form_off;
+    };
+
+    //$http.get('/connection/list').then(function(response){
+    //    self.labs = response.data;
+    //}, function(error){});
+
+    connectionManager.initConnections().then(function(response){
+        self.labs = response;
+    },function(errResponse){});
+    hideForm();
 
 }]);

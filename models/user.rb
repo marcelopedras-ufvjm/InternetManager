@@ -32,7 +32,7 @@ class User
       group_base: 'ou=Groups,dc=ict,dc=ufvjm'
   }
 
-  @ldap = LdapSearch.new(ldap_params)
+  LdapSearch.ldap_params = ldap_params
 
   has n, :connections
   has n, :connection_histories
@@ -41,19 +41,18 @@ class User
   validates_presence_of :username, :encrypted_password, :token, :end_live
   validates_uniqueness_of :username, :token
 
+
+
   def self.sign(user, password)
-    if @ldap.authenticate(user, password)
+    if LdapSearch.instance.authenticate(user, password)
       u = self.first(:username => user, :encrypted_password => User.encrypt(:password, password))
-      if u
-        u.create_token
-        u.refresh_time_live
-      else
+      unless u
           u = User.new
           u.username = user
-          u.password = password
-          u.create_token
-          u.refresh_time_live
       end
+      u.password = password
+      u.create_token
+      u.refresh_time_live
       u.save
       return u
     end
@@ -66,6 +65,10 @@ class User
       u.save
       return u
     end
+  end
+
+  def authenticate_by_ldap
+    LdapSearch.instance.authenticate(self.username, self.password)
   end
 
   def expire_token_time

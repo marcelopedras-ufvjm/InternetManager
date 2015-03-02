@@ -1,6 +1,6 @@
-<div class="well">
-    <form class="form-inline col-lg-offset-7">
-        <p>{{myCtrl.getUser()}}</p>
-        <button data-ng-click="myCtrl.logout()" type="button" class="btn btn-primary">logout</button>
+<div>
+    <form class="form">
+        <label>Autenticado como: <em>{{myCtrl.getUser()}}</em></label>
+        <button data-ng-click="myCtrl.logout()" type="button" class="btn btn-primary">Sair</button>
     </form>
 </div>

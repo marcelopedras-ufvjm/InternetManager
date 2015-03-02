@@ -1,17 +1,24 @@
 require 'rubygems'
 require 'net/ldap'
 require 'pp'
+require 'singleton'
 
 class LdapSearch
+  include Singleton
+  @@ldap_params = {}
 
-  def initialize(params = {})
+  def self.ldap_params=(parameters)
+    @@ldap_params = parameters
+  end
+
+  def initialize()
     p = {
       base: 'dc=ict,dc=ufvjm',
       host: '192.168.1.17',
       port: 389,
       user_base: 'ou=Users,dc=ict,dc=ufvjm',
       group_base: 'ou=Groups,dc=ict,dc=ufvjm'
-    }.merge(params)
+    }.merge(@@ldap_params)
 
 
     # @base = 'ou=Users,dc=ict,dc=ufvjm'

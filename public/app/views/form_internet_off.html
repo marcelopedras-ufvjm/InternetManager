@@ -1,0 +1,33 @@
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <button type="button" class="close"
+                        data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Período de interrupção da internet</h4>
+            </div>
+            <!-- Modal Body -->
+            <div class="modal-body">
+                <h1>Laboratório {{myCtrl.getFormData().lab}}</h1>
+                <form class="form-horizontal">
+                    <label>Horário de Início da interrupção</label>
+                    <input disabled class='form-control' data-ng-model="myCtrl.getFormData().start_time" type="text">
+                    <label>Horário de retorno da internet</label>
+                    <input class='form-control' data-ng-model="myCtrl.getFormData().end_time" type="text">
+
+
+                </form>
+            </div>
+            <!-- Modal Footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default"
+                        data-dismiss="modal">Cancelar
+                </button>
+                <button data-ng-click="myCtrl.applyConnectionChanges()" type="button" class="btn btn-primary">
+                    Aplicar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

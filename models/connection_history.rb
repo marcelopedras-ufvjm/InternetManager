@@ -10,19 +10,12 @@ class ConnectionHistory
 
   property :id, Serial
   property :created_at, DateTime, :required => true
-  property :connection_status, String, :required => true
+  property :connected, Boolean, :required => true
 
   belongs_to :connection
   belongs_to :user
 
-  validates_presence_of :connection_status, :user, :connection
-  validates_with_method :check_connection_status
-
-  def check_connection_status
-    ['on', 'off'].include?(self.connection_status)
-  end
-
-
+  validates_presence_of :connected, :user, :connection
 
 end
 

@@ -1,9 +1,9 @@
-<div class="well ">
-    <form class="form-inline col-lg-offset-7">
-        <input data-ng-model="myCtrl.attributes.login" type="text" placeholder="username" class="input-small"/>
-        <input data-ng-model="myCtrl.attributes.password" type="password" placeholder="password" class="input-small"/>
-        <button data-ng-click="myCtrl.sign()" type="submit" class="btn btn-primary">Sign</button>
-        <button data-ng-click="myCtrl.authenticate_by_token()" type="button" class="btn btn-primary">authenticate_by_token</button>
-        <button data-ng-click="myCtrl.logout()" type="button" class="btn btn-primary">logout</button>
+<div>
+    <p>Se autentique para poder alterar o status da conexão dos laboratórios</p>
+    <form class="form">
+        <input data-ng-model="myCtrl.attributes.login" type="text" placeholder="usuário" class="input-small"/>
+        <input data-ng-model="myCtrl.attributes.password" type="password" placeholder="senha" class="input-small"/>
+        <button data-ng-click="myCtrl.sign()" type="submit" class="btn btn-primary">Entrar</button>
     </form>
 </div>
+

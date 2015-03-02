@@ -17,7 +17,7 @@ Dir.glob('./{controllers,models,lib}/*.rb').each {|file|
 #require './app.rb'
 
 run Rack::URLMap.new({
-                         "/ldap" => InternetController,
+                         "/connection" => ConnectionController,
                          "/login" => LoginController,
                          "/" => ApplicationController
                      })

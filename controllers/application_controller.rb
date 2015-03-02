@@ -18,6 +18,7 @@ class ApplicationController < App
     /login/authenticate_by_token
     /data
     /
+    /connection/list
     "
 
     unless skip_check_token_paths.include? request.path
@@ -31,6 +32,8 @@ class ApplicationController < App
 
         halt(401,resp.to_json)
       end
+
+      @user = User.authenticate_by_token(token)
     end
   end
 

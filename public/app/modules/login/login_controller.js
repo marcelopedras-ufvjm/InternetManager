@@ -48,6 +48,7 @@ mainApp.controller('LoginController',['$http','$location','loginSession',functio
 
     self.logout = function() {
         loginSession.logout().then(function(response){
+            self.attributes.password = '';
             $location.path('/');
         }, function(errResponse){
         });

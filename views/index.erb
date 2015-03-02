@@ -17,11 +17,19 @@
   <![endif]-->
 </head>
 <body ng-app="mainApp">
+<div class="container">
 <div data-ng-controller="LoginController as myCtrl">
-  <div data-ng-include="myCtrl.logout_path()"></div>
-  <div data-ng-include="myCtrl.login_path()"></div>
+  <div class="row">
+    <div class="col-xs-6 col1" data-ng-include="'/app/views/header.html'"></div>
+    <div class="col-xs-6 col2 text-center">
+        <div data-ng-include="myCtrl.logout_path()"></div>
+        <div data-ng-include="myCtrl.login_path()"></div>
+    </div>
+  </div>
 </div>
-<div class="container" data-ng-view></div>
+  <hr>
+<div data-ng-view></div>
+</div>
 
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
@@ -33,6 +41,7 @@
 <script src="/app/app.js"></script>
 <script src="/app/modules/login/login_controller.js"></script>
 <script src="/app/modules/internet_labs/internet_labs_controller.js"></script>
+<script src="/app/modules/internet_labs/connection_service.js"></script>
 <script src="/app/modules/login/login_service.js"></script>
 <script src="/app/modules/login/login_interceptor.js"></script>
 <script src="/app/modules/login/login_status_service.js"></script>
