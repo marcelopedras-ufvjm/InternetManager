@@ -10,14 +10,56 @@
             <!-- Modal Body -->
             <div class="modal-body">
                 <h1>Laboratório {{myCtrl.getFormData().lab}}</h1>
-                <form class="form-horizontal">
-                    <label>Horário de Início da interrupção</label>
-                    <input disabled class='form-control' data-ng-model="myCtrl.getFormData().start_time" type="text">
-                    <label>Horário de retorno da internet</label>
-                    <input class='form-control' data-ng-model="myCtrl.getFormData().end_time" type="text">
+                <!--<form class="form-horizontal">-->
+                    <!--<label>Horário de Início da interrupção</label>-->
+                    <!--<input disabled class='form-control' data-ng-model="myCtrl.getFormData().start_time" type="text">-->
+                    <!--<label>Horário de retorno da internet</label>-->
+                    <!--<input class='form-control' data-ng-model="myCtrl.getFormData().end_time" type="text">-->
+                <!--</form>-->
+
+                <timepicker data-ng-model="myCtrl.getFormData().start_time" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></timepicker>
 
 
-                </form>
+                <!--datetimepicker bootstrap sem angular-->
+                <!--<div>-->
+                    <!--<div class='col-md-5'>-->
+                        <!--<div class="form-group">-->
+                            <!--<div class='input-group date' id='datetimepicker6'>-->
+                                <!--<input data-ng-model="myCtrl.getFormData().start_time" type='text' class="form-control" />-->
+                <!--<span class="input-group-addon"><span class="glyphicon glyphicon-time"></span>-->
+                <!--</span>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class='col-md-5'>-->
+                        <!--<div class="form-group">-->
+                            <!--<div class='input-group date' id='datetimepicker7'>-->
+                                <!--<input data-ng-model="myCtrl.getFormData().start_end" type='text' class="form-control" />-->
+                <!--<span class="input-group-addon"><span class="glyphicon glyphicon-time"></span>-->
+                <!--</span>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<script type="text/javascript">-->
+                    <!--$(function () {-->
+                        <!--var picker1 = $('#datetimepicker6').datetimepicker({-->
+                            <!--format: 'LT'-->
+                        <!--});-->
+                        <!--var picker2 = $('#datetimepicker7').datetimepicker({-->
+                            <!--format: 'LT'-->
+                        <!--});-->
+                        <!--$("#datetimepicker6").on("dp.change",function (e) {-->
+                            <!--$('#datetimepicker7').data("DateTimePicker").minDate(e.date);-->
+                        <!--});-->
+                        <!--$("#datetimepicker7").on("dp.change",function (e) {-->
+                            <!--$('#datetimepicker6').data("DateTimePicker").maxDate(e.date);-->
+                        <!--});-->
+                    <!--});-->
+                <!--</script>-->
+
+
+
             </div>
             <!-- Modal Footer -->
             <div class="modal-footer">

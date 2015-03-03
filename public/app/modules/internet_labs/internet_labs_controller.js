@@ -42,6 +42,7 @@ mainApp.controller('InternetLabsController',['$http','$location','loginSession',
     };
 
     var initForm = function(labObj) {
+
         t=Time();
         form_off_data.start_time = t.to_s();
         form_off_data.end_time = t.addHour(1).to_s();

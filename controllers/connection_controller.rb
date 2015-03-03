@@ -37,7 +37,7 @@ class ConnectionController < ApplicationController
     c.connected = internet
     # DateTime.strftime("%d/%m/%Y %H:%M:%S"),
     c.connection_down_start = start_time == 'n/a' ? nil : DateTime.strptime( start_time,"%H:%M:%S")
-    c.connection_down_end = end_time== 'n/a' ? nil : DateTime.strptime(end_time,"%H:%M:%S")
+    c.connection_down_end = end_time == 'n/a' ? nil : DateTime.strptime(end_time,"%H:%M:%S")
     c.user = @user
     c.save
     Connection.list.to_json

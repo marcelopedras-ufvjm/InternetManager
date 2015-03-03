@@ -10,10 +10,11 @@ mainApp.factory('AuthInterceptor',
             },
 
             responseError: function(responseRejection) {
-                loginStatus.setAsLogout();
-                loginStatus.logout();
-
-                $location.path('/');
+                if(responseRejection.status == 401) {
+                    loginStatus.setAsLogout();
+                    loginStatus.logout();
+                    $location.path('/');
+                }
                 return $q.reject(responseRejection);
             }
         };
