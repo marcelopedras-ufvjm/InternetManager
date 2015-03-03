@@ -17,7 +17,37 @@
                     <!--<input class='form-control' data-ng-model="myCtrl.getFormData().end_time" type="text">-->
                 <!--</form>-->
 
-                <timepicker data-ng-model="myCtrl.getFormData().start_time" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></timepicker>
+                    <hr>
+                <div class="row">
+                    <div class="col-md-offset-3 col-md-2">
+                        <label>De</label>
+                        <timepicker class="col-md-offset-2 col-md-2" readonly-input="true" ng-model="myCtrl.getFormData().start_time" ng-change="myCtrl.changed()" hour-step="myCtrl.timeOpt.start_time.mstep" minute-step="myCtrl.timeOpt.start_time.mstep" show-meridian="myCtrl.timeOpt.ismeridian"></timepicker>
+                    </div>
+
+                    <div class="col-md-offset-1 col-md-2">
+                        <label>Até</label>
+                        <timepicker class="col-md-offset-2 col-md-2" ng-model="myCtrl.getFormData().end_time" ng-change="myCtrl.changed()" hour-step="myCtrl.timeOpt.end_time.hstep" minute-step="myCtrl.timeOpt.end_time.mstep" show-meridian="myCtrl.timeOpt.ismeridian"></timepicker>
+                    </div>
+                </div>
+
+                <!--<pre class="alert alert-info">Time is: {{myCtrl.getFormData().start_time | date:'shortTime' }}</pre>-->
+
+                <!--<div class="row">-->
+                    <!--<div class="col-xs-6">-->
+                        <!--Hours step is:-->
+                        <!--<select class="form-control" ng-model="myCtrl.timeOpt.hstep" ng-options="opt for opt in myCtrl.timeOpt.options.hstep"></select>-->
+                    <!--</div>-->
+                    <!--<div class="col-xs-6">-->
+                        <!--Minutes step is:-->
+                        <!--<select class="form-control" ng-model="myCtrl.timeOpt.mstep" ng-options="opt for opt in myCtrl.timeOpt.options.mstep"></select>-->
+                    <!--</div>-->
+                <!--</div>-->
+
+                <!--<hr>-->
+
+                <!--<button class="btn btn-info" ng-click="myCtrl.toggleMode()">12H / 24H</button>-->
+                <!--<button class="btn btn-default" ng-click="myCtrl.update()">Set to 14:00</button>-->
+                <!--<button class="btn btn-danger" ng-click="myCtrl.clear()">Clear</button>-->
 
 
                 <!--datetimepicker bootstrap sem angular-->

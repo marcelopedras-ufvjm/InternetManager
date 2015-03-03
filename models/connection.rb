@@ -87,6 +87,8 @@ class Connection
         # end_time: nil
     connections = Connection.all.map.with_index(0) do |c,index|
       date = DateTime.now.strftime("%d/%m/%Y")
+      start_time_p = (c.connection_down_start ? c.connection_down_start.strftime("%H:%M") : 'n/a')
+      end_time_p = (c.connection_down_end ? c.connection_down_end.strftime("%H:%M") : 'n/a')
       hash = {
           id: c.id,
           order: index,
@@ -95,8 +97,8 @@ class Connection
           internet: c.connected,
           by: c.user.username,
           date: date,
-          start_time: c.connection_down_start ? c.connection_down_start.strftime("%H:%M:%S") : 'n/a' ,
-          end_time: c.connection_down_end ? c.connection_down_end.strftime("%H:%M:%S") : 'n/a'
+          start_time: start_time_p,
+          end_time: end_time_p
       }
       index=index + 1
       hash

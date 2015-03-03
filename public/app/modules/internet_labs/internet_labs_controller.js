@@ -1,7 +1,7 @@
 /**
  * Created by marcelo on 17/02/15.
  */
-mainApp.controller('InternetLabsController',['$http','$location','loginSession','connectionManager',function($http,$location,loginSession,connectionManager){
+mainApp.controller('InternetLabsController',['$http','$log','$location','loginSession','connectionManager',function($http,$log,$location,loginSession,connectionManager){
     console.log('InternetLabsController criado')
     var self = this;
     var form_off = '/app/views/form_internet_off.html';
@@ -13,13 +13,57 @@ mainApp.controller('InternetLabsController',['$http','$location','loginSession',
         end_time: undefined
     };
 
+    self.timeOpt = {
+        start_time: {
+            hstep: 0,
+            mstep: 0
+        },
+        end_time: {
+            hstep: 1,
+            mstep: 10
+        },
+
+        ismeridian: false
+
+    };
+
+    self.toggleMode = function() {
+        self.timeOpt.ismeridian = ! self.timeOpt.ismeridian;
+    };
+
+    self.update = function() {
+        var d = new Date();
+        d.setHours( 14 );
+        d.setMinutes( 0 );
+        self.timeOpt.mytime = d;
+    };
+
+    self.changed = function () {
+        console.log(form_off_data.start_time);
+        console.log(form_off_data.end_time);
+
+        if(form_off_data.start_time >= form_off_data.end_time) {
+            form_off_data.end_time = form_off_data.start_time;
+            var aux = new Date(form_off_data.start_time);
+            aux.setMinutes(aux.getMinutes()+10);
+            form_off_data.end_time = aux;
+        }
+        //$log.log('Time changed to: ' + self.timeOpt.mytime);
+    };
+
+    self.clear = function() {
+        self.timeOpt.mytime = null;
+    };
+
+
+
     var time_pattern = /^(?:(?:([01]?\d|2[0-3]):)?([0-5]?\d):)?([0-5]?\d)$/;
 
     var downConnection = function() {
         var lab = retrieveLab(form_off_data.order);
         lab.internet = false;
-        lab.start_time = form_off_data.start_time;
-        lab.end_time = form_off_data.end_time;
+        lab.start_time = moment(form_off_data.start_time).format("HH:mm");//moment(form_off_data.start_time).format("DD/MM/YYYY h:mm:ss");
+        lab.end_time = moment(form_off_data.end_time).format("HH:mm");//moment(form_off_data.end_time).format("DD/MM/YYYY h:mm:ss");
         lab.by = loginSession.getUser();
         persist(lab);
     };
@@ -43,9 +87,13 @@ mainApp.controller('InternetLabsController',['$http','$location','loginSession',
 
     var initForm = function(labObj) {
 
-        t=Time();
-        form_off_data.start_time = t.to_s();
-        form_off_data.end_time = t.addHour(1).to_s();
+        //t=Time();
+
+        form_off_data.start_time = new Date();//t.to_s();
+
+        var aux = new Date(form_off_data.start_time);
+        aux.setMinutes(aux.getMinutes()+10);
+        form_off_data.end_time = aux;// t.addHour(1).to_s();
         form_off_data.lab = labObj.room_name;
         form_off_data.id = labObj.id;
         form_off_data.order = labObj.order;

@@ -36,8 +36,10 @@ class ConnectionController < ApplicationController
     c=Connection.first(id: id)
     c.connected = internet
     # DateTime.strftime("%d/%m/%Y %H:%M:%S"),
-    c.connection_down_start = start_time == 'n/a' ? nil : DateTime.strptime( start_time,"%H:%M:%S")
-    c.connection_down_end = end_time == 'n/a' ? nil : DateTime.strptime(end_time,"%H:%M:%S")
+    start_time_p = (start_time == 'n/a' ? nil : DateTime.strptime( start_time,"%H:%M"))
+    end_time_p = (end_time == 'n/a' ? nil : DateTime.strptime(end_time,"%H:%M"))
+    c.connection_down_start = start_time_p #== 'n/a' ? nil : DateTime.strptime( start_time,"%H:%M")
+    c.connection_down_end = end_time_p #== 'n/a' ? nil : DateTime.strptime(end_time,"%H:%M")
     c.user = @user
     c.save
     Connection.list.to_json
