@@ -44,4 +44,8 @@ class ConnectionController < ApplicationController
     c.save
     Connection.list.to_json
   end
+
+  get '/squid_sync' do
+    {dados: 'esses são os dados do server'}.to_json
+  end
 end

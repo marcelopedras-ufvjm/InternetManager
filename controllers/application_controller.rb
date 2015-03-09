@@ -19,6 +19,7 @@ class ApplicationController < App
     /data
     /
     /connection/list
+    /connection/squid_sync
     "
 
     unless skip_check_token_paths.include? request.path
