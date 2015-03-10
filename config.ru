@@ -1,3 +1,4 @@
+#\ -w -o localhost -p 9696
 require 'sinatra/base'
 require 'logger'
 require 'bundler'

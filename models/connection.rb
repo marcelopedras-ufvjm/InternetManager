@@ -1,9 +1,8 @@
 require 'dm-core'
 require 'dm-migrations'
 require 'dm-validations'
+require 'dm-timestamps'
 #require_relative '../models/connection_history'
-
-
 
 DataMapper.setup(:default, "sqlite3://#{Dir.pwd}/development.db")
 
@@ -12,11 +11,13 @@ class Connection
   include DataMapper::Resource
 
   property :id, Serial
-  property :room_name, String, :required => true
+  property :room_name, String, :required => true, :unique_index => :name
   property :location, String, :required => true
   property :connected, Boolean, :required => true, :default => false
   property :connection_down_start, DateTime
-  property :connection_down_end,DateTime
+  property :connection_down_end, DateTime
+  #todo - Incluir updated_at e recarregar base de dados
+  #property :updated_at, DateTime
 
   has n, :connection_histories
   belongs_to :user
@@ -105,6 +106,10 @@ class Connection
 
     end
     connections
+  end
+
+  def self.sync(remoteData)
+    #todo fazer
   end
 end
 

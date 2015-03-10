@@ -45,7 +45,10 @@ class ConnectionController < ApplicationController
     Connection.list.to_json
   end
 
-  get '/squid_sync' do
-    {dados: 'esses são os dados do server'}.to_json
+  post '/squid_sync' do
+    data = params['data']
+    result = Connection.list
+    result.push data
+    result.to_json
   end
 end

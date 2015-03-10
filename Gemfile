@@ -7,4 +7,7 @@
  gem 'dm-migrations'
  gem 'dm-sqlite-adapter'
  gem 'dm-validations'
+ gem 'dm-timestamps'
  gem 'attr_encrypted'
+ gem 'sinatra-contrib'
+ gem 'thin'
