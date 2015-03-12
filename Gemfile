@@ -11,3 +11,5 @@
  gem 'attr_encrypted'
  gem 'sinatra-contrib'
  gem 'thin'
+ gem 'rest-client'
+ gem 'ruby-debug-ide'

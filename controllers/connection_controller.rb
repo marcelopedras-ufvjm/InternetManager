@@ -2,6 +2,7 @@ require 'application_controller'
 require 'log'
 require 'ldapsearch'
 require 'json'
+require 'rest_client'
 
 class ConnectionController < ApplicationController
   # get '/internet' do
@@ -45,10 +46,8 @@ class ConnectionController < ApplicationController
     Connection.list.to_json
   end
 
-  post '/squid_sync' do
-    data = params['data']
-    result = Connection.list
-    result.push data
-    result.to_json
+  get '/squid_sync' do
+    dados = Connection.list
+    RestClient.post('192.168.1.20:9898/squid_reconfigure', :params => {:data => dados})
   end
 end
