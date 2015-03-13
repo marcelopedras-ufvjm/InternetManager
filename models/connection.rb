@@ -16,14 +16,16 @@ class Connection
   property :connected, Boolean, :required => true, :default => false
   property :connection_down_start, DateTime
   property :connection_down_end, DateTime
+
   #todo - Incluir updated_at e recarregar base de dados
-  #property :updated_at, DateTime
+  property :updated_at, DateTime
+  property :ip_range, String, :required => true
 
   has n, :connection_histories
   belongs_to :user
 
   validates_presence_of :room_name, :location, :user
-  validates_uniqueness_of :room_name, :location
+  validates_uniqueness_of :room_name, :location, :ip_range
   validates_with_method :check_off_time
 
   #validations
@@ -90,6 +92,7 @@ class Connection
       date = DateTime.now.strftime("%d/%m/%Y")
       start_time_p = (c.connection_down_start ? c.connection_down_start.strftime("%H:%M") : 'n/a')
       end_time_p = (c.connection_down_end ? c.connection_down_end.strftime("%H:%M") : 'n/a')
+
       hash = {
           id: c.id,
           order: index,
@@ -110,6 +113,35 @@ class Connection
 
   def self.sync(remoteData)
     #todo fazer
+  end
+
+  def self.format_to_squid
+    connections = Connection.all.map.with_index(0) do |c,index|
+      start_time_p = (c.connection_down_start ? c.connection_down_start.strftime("%d/%m/%y %H:%M:%S") : 'n/a')
+      end_time_p = (c.connection_down_end ? c.connection_down_end.strftime("%d/%m/%y %H:%M:%S") : 'n/a')
+
+      hash = {
+          id: c.id,
+          order: index,
+          lab: c.room_name,
+          ip_range: c.ip_range,
+          internet: c.connected,
+          start_time: start_time_p,
+          end_time: end_time_p,
+          updated_at: c.updated_at.strftime("%d/%m/%y %H:%M:%S")
+      }
+      index=index + 1
+      hash
+
+    end
+    connections
+  end
+
+  def self.squid_sync
+    data = Connection.format_to_squid
+    #TODO - Passar para variável de ambiente
+    squid_key = '1234'
+    RestClient.post('192.168.1.20:9898/squid_reconfigure', :params =>{:labs => data.to_json, :squid_key => squid_key})
   end
 end
 

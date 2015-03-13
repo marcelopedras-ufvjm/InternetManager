@@ -43,11 +43,14 @@ class ConnectionController < ApplicationController
     c.connection_down_end = end_time_p #== 'n/a' ? nil : DateTime.strptime(end_time,"%H:%M")
     c.user = @user
     c.save
-    Connection.list.to_json
+    {success: Connection.squid_sync}.to_json
+    #Connection.list.to_json
   end
 
-  get '/squid_sync' do
-    dados = Connection.list
-    RestClient.post('192.168.1.20:9898/squid_reconfigure', :params => {:data => dados})
-  end
+  # get '/squid_sync' do
+  #   data = Connection.format_to_squid
+  #   #TODO - Passar para variável de ambiente
+  #   squid_key = '1234'
+  #   RestClient.post('192.168.1.20:9898/squid_reconfigure', :params =>{:labs => data.to_json, :squid_key => squid_key})
+  # end
 end
