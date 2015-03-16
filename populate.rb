@@ -37,3 +37,13 @@ c3.ip_range = '192.168.1.0/24'
 c3.on
 c3.save
 
+c4 = Connection.new
+
+c4.user = u
+c4.room_name = 'test2'
+c4.location = 'sala test2'
+c4.ip_range = '192.168.2.0/24'
+c4.on
+c4.save
+
+
