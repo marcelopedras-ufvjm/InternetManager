@@ -13,7 +13,7 @@ class Connection
   property :id, Serial
   property :room_name, String, :required => true, :unique_index => :name
   property :location, String, :required => true
-  property :connected, Boolean, :required => true, :default => false
+  property :connected, Boolean, :required => true, :default => true
   property :connection_down_start, DateTime
   property :connection_down_end, DateTime
 
