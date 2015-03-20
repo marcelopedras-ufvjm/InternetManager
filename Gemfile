@@ -13,4 +13,4 @@
  gem 'thin'
  gem 'rest-client'
  gem 'ruby-debug-ide'
- gem 'debase'
+ #gem 'debase'

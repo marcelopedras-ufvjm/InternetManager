@@ -43,7 +43,9 @@ class ConnectionController < ApplicationController
     c.connection_down_end = end_time_p #== 'n/a' ? nil : DateTime.strptime(end_time,"%H:%M")
     c.user = @user
     c.save
-    {success: Connection.squid_sync}.to_json
+    result_sync = Connection.sync
+    result_sync.to_json
+    #{success: Connection.squid_sync}.to_json
     #Connection.list.to_json
   end
 

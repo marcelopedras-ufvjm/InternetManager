@@ -111,28 +111,28 @@ class Connection
     connections
   end
 
-  def self.sync(remoteData)
-    #todo fazer
+  def self.sync(connections_hashs = {})
+    data = Connection.format_to_squid
+    #TODO - Passar para variável de ambiente
+    squid_key = '1234'
+    RestClient.post('localhost:9898/sync', :params =>{:data => data.to_json, :squid_key => squid_key})
   end
 
+
   def self.format_to_squid
-    connections = Connection.all.map.with_index(0) do |c,index|
+    connections = Connection.all.map do |c|
       start_time_p = (c.connection_down_start ? c.connection_down_start.strftime("%d/%m/%y %H:%M:%S") : 'n/a')
       end_time_p = (c.connection_down_end ? c.connection_down_end.strftime("%d/%m/%y %H:%M:%S") : 'n/a')
 
       hash = {
-          id: c.id,
-          order: index,
-          lab: c.room_name,
+          room_name: c.room_name,
+          connected: c.connected,
           ip_range: c.ip_range,
-          internet: c.connected,
-          start_time: start_time_p,
-          end_time: end_time_p,
+          down_time: start_time_p,
+          up_time: end_time_p,
           updated_at: c.updated_at.strftime("%d/%m/%y %H:%M:%S")
       }
-      index=index + 1
       hash
-
     end
     connections
   end

@@ -92,7 +92,8 @@ mainApp.controller('InternetLabsController',['$http','$log','$location','loginSe
         form_off_data.start_time = new Date();//t.to_s();
 
         var aux = new Date(form_off_data.start_time);
-        aux.setMinutes(aux.getMinutes()+10);
+        //TODO - Melhorar isso
+        aux.setMinutes(aux.getMinutes()+1);
         form_off_data.end_time = aux;// t.addHour(1).to_s();
         form_off_data.lab = labObj.room_name;
         form_off_data.id = labObj.id;
