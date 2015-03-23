@@ -112,10 +112,43 @@ class Connection
   end
 
   def self.sync(connections_hashs = {})
-    data = Connection.format_to_squid
-    #TODO - Passar para variável de ambiente
-    squid_key = '1234'
-    RestClient.post('localhost:9898/sync', :params =>{:data => data.to_json, :squid_key => squid_key})
+    #write to squid
+    if connections_hashs.empty?
+      data = Connection.format_to_squid
+      #TODO - Passar para variável de ambiente
+      squid_key = '1234'
+      RestClient.post('localhost:9898/sync', :params =>{:data => data.to_json, :squid_key => squid_key})
+    else
+    #write from squid
+    #TODO - tratar exceções, pode ser que na base do squid exista um room_name q não existe em internet manager? pensar
+      result = connections_hashs.map do |c|
+        connection = Connection.first({:room_name => c['room_name']})
+        #unless connection
+        #  connection = Connection.new
+        #  connection.room_name =  c['room_name']
+        #end
+
+        if connection.connected != c['connected']
+          connection.connected   = c['connected']
+
+          if connection.connected
+            connection.connection_down_start = nil
+            connection.connection_down_end   = nil
+          else
+            connection.connection_down_start = DateTime.strptime(c['down_time'], "%d/%m/%Y %H:%M:%S")
+            connection.connection_down_end   = DateTime.strptime(c['up_time'], "%d/%m/%Y %H:%M:%S")
+          end
+
+          connection.ip_range    = c['ip_range']
+          connection.user = User.first(username: 'automatic')
+          connection.save
+        end
+      connection
+      end
+      #to_delete = Connection.all - result
+      #to_delete.destroy
+      result
+    end
   end
 
 

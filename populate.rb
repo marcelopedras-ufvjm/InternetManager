@@ -2,12 +2,19 @@ require_relative './models/user'
 require_relative './models/connection'
 require_relative './models/connection_history'
 
-u = User.new
-u.username = 'carol'
-u.password = '123456'
-u.create_token
-u.refresh_time_live
-u.save
+u1 = User.new
+u1.username = 'carol'
+u1.password = '123456'
+u1.create_token
+u1.refresh_time_live
+u1.save
+
+u2 = User.new
+u2.username = 'automatic'
+u2.password = '123456'
+u2.create_token
+u2.refresh_time_live
+u2.save
 
 c1 = Connection.new
 

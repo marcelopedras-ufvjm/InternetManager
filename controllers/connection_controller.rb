@@ -49,10 +49,11 @@ class ConnectionController < ApplicationController
     #Connection.list.to_json
   end
 
-  # get '/squid_sync' do
-  #   data = Connection.format_to_squid
-  #   #TODO - Passar para variável de ambiente
-  #   squid_key = '1234'
-  #   RestClient.post('192.168.1.20:9898/squid_reconfigure', :params =>{:labs => data.to_json, :squid_key => squid_key})
-  # end
+  post '/squid_sync' do
+    squid_key = params['squid_key']
+    data = params['data']
+    labs=JSON.parse(data)
+    Connection.sync(labs)
+    labs.to_json
+  end
 end
