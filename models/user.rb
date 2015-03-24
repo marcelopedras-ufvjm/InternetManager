@@ -44,7 +44,9 @@ class User
 
 
   def self.sign(user, password)
-    if LdapSearch.instance.authenticate(user, password)
+    group = %w'ICT_admins_labs ICT_professores'
+
+    if LdapSearch.instance.authenticate(user, password,group)
       u = self.first(:username => user, :encrypted_password => User.encrypt(:password, password))
       unless u
           u = User.new

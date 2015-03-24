@@ -8,8 +8,6 @@ class LoginController < ApplicationController
 
     user = params['user']
     password = params['password']
-    #TODO Marcelo  - Tratar o caso de groupos de professores e de admins de laboratório
-    group = params['group']
 
     resp = {
         'authenticated' => false

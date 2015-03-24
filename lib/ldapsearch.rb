@@ -42,6 +42,14 @@ class LdapSearch
   end
 
   def group_filter(group)
+    if group.class == Array
+      return group.map do |g|
+        Net::LDAP::Filter.eq("memberOf", "cn=#{g},#{@group_base}")
+      end.reduce do |g1,g2|
+        g1 | g2
+      end
+    end
+
     Net::LDAP::Filter.eq("memberOf", "cn=#{group},#{@group_base}") if group
   end
 
