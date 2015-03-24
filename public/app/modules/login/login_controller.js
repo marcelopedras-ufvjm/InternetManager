@@ -11,7 +11,9 @@ mainApp.controller('LoginController',['$http','$location','loginSession',functio
         password: ''
     };
 
-
+    self.hasLoginError = function() {
+        return loginSession.hasLoginError();
+    };
 
     self.logout_path = function() {
         var path = '/app/views/logout.html';
@@ -49,6 +51,7 @@ mainApp.controller('LoginController',['$http','$location','loginSession',functio
     self.logout = function() {
         loginSession.logout().then(function(response){
             self.attributes.password = '';
+            self.attributes.login = '';
             $location.path('/');
         }, function(errResponse){
         });

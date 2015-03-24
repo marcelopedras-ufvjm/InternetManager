@@ -4,7 +4,8 @@
 
 mainApp.service('loginStatus',[function(){
     var attributes = {
-        logged: false
+        logged: false,
+        login_attempts: 0
     };
 
     this.isLogged = function() {
@@ -13,6 +14,7 @@ mainApp.service('loginStatus',[function(){
 
     this.login = function() {
         attributes.logged = true;
+        attributes.login_attempts = 0
     };
 
     this.logout = function() {
@@ -29,5 +31,13 @@ mainApp.service('loginStatus',[function(){
         localStorage['token'] = token;
         localStorage['authenticated'] = true;
         localStorage['user'] = user;
+    };
+
+    this.increase_login_attemps = function(){
+        ++attributes.login_attempts;
+    };
+
+    this.login_attemps = function(){
+        return attributes.login_attempts
     };
 }]);

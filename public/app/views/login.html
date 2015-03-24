@@ -4,6 +4,7 @@
         <input data-ng-model="myCtrl.attributes.login" type="text" placeholder="usuário" class="input-small"/>
         <input data-ng-model="myCtrl.attributes.password" type="password" placeholder="senha" class="input-small"/>
         <button data-ng-click="myCtrl.sign()" type="submit" class="btn btn-primary">Entrar</button>
+        <p class="text-warning" data-ng-show="myCtrl.hasLoginError()">Usuário ou login inválidos</p>
     </form>
 </div>
 

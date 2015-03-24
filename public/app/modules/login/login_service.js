@@ -27,6 +27,7 @@ mainApp.service('loginSession',['$http','loginStatus', function($http,loginStatu
             return response.data
 
         }, function(errResponse){
+            loginStatus.increase_login_attemps();
             setAsLogout();
             loginStatus.logout();
             return errResponse.data
@@ -72,5 +73,9 @@ mainApp.service('loginSession',['$http','loginStatus', function($http,loginStatu
 
     this.getToken = function() {
         return localStorage['token'];
+    };
+
+    this.hasLoginError = function(){
+        return loginStatus.login_attemps() >= 1
     };
 }]);
