@@ -7,7 +7,7 @@ var mainApp = angular.module('mainApp',['ngRoute','ui.bootstrap'])
                 controller: 'InternetLabsController',
                 controllerAs : 'myCtrl'
 
-            })
+            });
             //.when('/labs',{
             //    templateUrl: '/app/views/list_labs.html',
             //    controller: 'InternetLabsController',

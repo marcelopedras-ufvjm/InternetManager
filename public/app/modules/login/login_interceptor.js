@@ -10,6 +10,7 @@ mainApp.factory('AuthInterceptor',
             },
 
             responseError: function(responseRejection) {
+                //TODO - Melhorar o comportamento para que seja possível voltar a lista dos estados originais dos laboratórios em caso de falha
                 if(responseRejection.status == 401) {
                     loginStatus.setAsLogout();
                     loginStatus.logout();
