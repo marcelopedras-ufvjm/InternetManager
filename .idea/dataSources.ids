@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component name="dataSourceStorage">
-  <data-source name="SQLite -InternetManager" uuid="56507870-727b-428c-a457-7459fc12b8c0">
+  <data-source name="InternetManager" uuid="a38c23dc-4e0c-49cd-9141-fd43be2a9474">
     <database-info product="SQLite" version="3.7.6.3" jdbc-version="2.1" driver-name="SQLiteJDBC" driver-version="native"/>
     <case-sensitivity plain-identifiers="mixed" quoted-identifiers="mixed"/>
     <schema name="" catalog=""/>
