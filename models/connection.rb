@@ -4,7 +4,8 @@ require 'dm-validations'
 require 'dm-timestamps'
 #require_relative '../models/connection_history'
 
-DataMapper.setup(:default, "sqlite3://#{Dir.pwd}/development.db")
+#DataMapper.setup(:default, "sqlite3://#{Dir.pwd}/development.db")
+#DataMapper.setup(:default, "sqlite3://#{Dir.pwd}/production.db")
 
 class Connection
 

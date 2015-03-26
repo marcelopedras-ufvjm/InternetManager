@@ -1,4 +1,4 @@
-#\ -w -o 192.168.1.43 -p 9696
+#\ -w -o localhost -p 9696
 require 'sinatra/base'
 require 'logger'
 require 'bundler'

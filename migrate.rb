@@ -2,7 +2,7 @@ require 'dm-core'
 require 'dm-migrations'
 
 
-DataMapper.setup(:default, "sqlite3://#{Dir.pwd}/development.db")
+DataMapper.setup(:default, "sqlite3://#{Dir.pwd}/production.db")
 DataMapper::Logger.new($stdout, :debug)
 
 require_relative './models/user'

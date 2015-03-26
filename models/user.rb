@@ -7,7 +7,8 @@ require 'attr_encrypted/adapters/data_mapper'
 require 'json'
 require_relative '../lib/ldapsearch.rb'
 
-DataMapper.setup(:default, "sqlite3://#{Dir.pwd}/development.db")
+#DataMapper.setup(:default, "sqlite3://#{Dir.pwd}/development.db")
+#DataMapper.setup(:default, "sqlite3://#{Dir.pwd}/production.db")
 
 class User
 
