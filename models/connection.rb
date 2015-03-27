@@ -118,7 +118,7 @@ class Connection
       data = Connection.format_to_squid
       #TODO - Passar para variável de ambiente
       squid_key = '1234'
-      RestClient.post('192.168.1.41:9898/sync', :params =>{:data => data.to_json, :squid_key => squid_key})
+      RestClient.post("#{env['SQUID_HOST']}:9898/sync", :params =>{:data => data.to_json, :squid_key => squid_key})
     else
     #write from squid
     #TODO - tratar exceções, pode ser que na base do squid exista um room_name q não existe em internet manager? pensar
@@ -171,12 +171,12 @@ class Connection
     connections
   end
 
-  def self.squid_sync
-    data = Connection.format_to_squid
-    #TODO - Passar para variável de ambiente
-    squid_key = '1234'
-    RestClient.post('192.168.1.41:9898/squid_reconfigure', :params =>{:labs => data.to_json, :squid_key => squid_key})
-  end
+  # def self.squid_sync
+  #   data = Connection.format_to_squid
+  #   #TODO - Passar para variável de ambiente
+  #   squid_key = '1234'
+  #   RestClient.post('192.168.1.41:9898/squid_reconfigure', :params =>{:labs => data.to_json, :squid_key => squid_key})
+  # end
 end
 
 #DataMapper.finalize

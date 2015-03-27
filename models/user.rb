@@ -27,7 +27,7 @@ class User
   attr_encrypted :password, :key=>'fpDZ9XxpQXgyJju2kqbx5cB1rQS7N2lOJcOjZ2yDt9ofOBgUvcHrnNVyBNqzOujkLALlc8gTjZzzbrjMnX2UHgUX9eq9jcUpuXYn297OlkzYaxlHQWcqjCbKKIuGHWLvf-FQgA', :encode => true
   ldap_params = {
       base: 'dc=ict,dc=ufvjm',
-      host: '192.168.1.17',
+      host: "#{'LDAP_HOST'}",
       port: 389,
       user_base: 'ou=Users,dc=ict,dc=ufvjm',
       group_base: 'ou=Groups,dc=ict,dc=ufvjm'

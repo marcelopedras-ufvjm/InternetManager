@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PublishConfigData" serverName="InternetManager-Production">
+    <serverData>
+      <paths name="InternetManager">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/srv/internet-manager/InternetManager-master" local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="InternetManager-Production">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/srv/internet-manager/InternetManager-master" local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+    </serverData>
+  </component>
+</project>
