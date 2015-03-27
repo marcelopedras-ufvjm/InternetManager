@@ -118,7 +118,7 @@ class Connection
       data = Connection.format_to_squid
       #TODO - Passar para variável de ambiente
       squid_key = '1234'
-      RestClient.post("#{env['SQUID_HOST']}:9898/sync", :params =>{:data => data.to_json, :squid_key => squid_key})
+      RestClient.post("#{ENV['SQUID_HOST']}:9898/sync", :params =>{:data => data.to_json, :squid_key => squid_key})
     else
     #write from squid
     #TODO - tratar exceções, pode ser que na base do squid exista um room_name q não existe em internet manager? pensar

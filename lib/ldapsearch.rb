@@ -14,7 +14,7 @@ class LdapSearch
   def initialize()
     p = {
       base: 'dc=ict,dc=ufvjm',
-      host: "#{env['LDAP_HOST']}",
+      host: "#{ENV['LDAP_HOST']}",
       port: 389,
       user_base: 'ou=Users,dc=ict,dc=ufvjm',
       group_base: 'ou=Groups,dc=ict,dc=ufvjm'
