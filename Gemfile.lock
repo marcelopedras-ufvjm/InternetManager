@@ -80,6 +80,7 @@ DEPENDENCIES
   activesupport
   attr_encrypted
   debase
+  debase-ruby_core_source
   dm-core
   dm-migrations
   dm-sqlite-adapter
