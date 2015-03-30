@@ -2,11 +2,24 @@
 <project version="4">
   <component name="PublishConfigData">
     <serverData>
+      <paths name="InternetManagerProduction">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/srv/internet-manager/InternetManager-master" local="$PROJECT_DIR$" web="/" />
+          </mappings>
+          <excludedPaths>
+            <excludedPath local="true" path="$PROJECT_DIR$/.idea" />
+          </excludedPaths>
+        </serverdata>
+      </paths>
       <paths name="InternetManagerTests">
         <serverdata>
           <mappings>
             <mapping deploy="/srv/internet-manager/InternetManager-master" local="$PROJECT_DIR$" web="/" />
           </mappings>
+          <excludedPaths>
+            <excludedPath local="true" path="$PROJECT_DIR$/.idea" />
+          </excludedPaths>
         </serverdata>
       </paths>
     </serverData>
