@@ -24,7 +24,7 @@ class User
   property :token, Text, :required => true,  :writer => :private
   property :end_live, DateTime, :required => true,  :writer => :private
 
-  attr_encrypted :password, :key=>ENV['ATTR_ENCRYPTED_PW'], :encode => true
+  attr_encrypted :password, :key=>'fpDZ9XxpQXgyJju2kqbx5cB1rQS7N2lOJcOjZ2yDt9ofOBgUvcHrnNVyBNqzOujkLALlc8gTjZzzbrjMnX2UHgUX9eq9jcUpuXYn297OlkzYaxlHQWcqjCbKKIuGHWLvf-FQgA', :encode => true
   ldap_params = {
       base: 'dc=ict,dc=ufvjm',
       host: "#{ENV['LDAP_HOST']}",

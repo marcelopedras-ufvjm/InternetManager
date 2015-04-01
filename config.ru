@@ -17,8 +17,6 @@ Dir.glob('./{controllers,models,lib}/*.rb').each {|file|
 
 #require './app.rb'
 
-ENV["RACK_ENV"]='production'
-
 run Rack::URLMap.new({
                          "/connection" => ConnectionController,
                          "/login" => LoginController,
