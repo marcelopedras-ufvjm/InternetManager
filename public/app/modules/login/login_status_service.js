@@ -22,15 +22,15 @@ mainApp.service('loginStatus',[function(){
     };
 
     this.setAsLogout = function() {
-        localStorage['token'] = '';
-        localStorage['authenticated'] = false;
-        localStorage['user'] = '';
+        sessionStorage['token'] = '';
+        sessionStorage['authenticated'] = false;
+        sessionStorage['user'] = '';
     };
 
     this.setAsLogin = function(user, token) {
-        localStorage['token'] = token;
-        localStorage['authenticated'] = true;
-        localStorage['user'] = user;
+        sessionStorage['token'] = token;
+        sessionStorage['authenticated'] = true;
+        sessionStorage['user'] = user;
     };
 
     this.increase_login_attemps = function(){

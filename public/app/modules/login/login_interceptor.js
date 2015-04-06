@@ -5,7 +5,7 @@ mainApp.factory('AuthInterceptor',
     ['$q','$location','loginStatus', function($q, $location, loginStatus) {
         return {
             request: function(config) {
-                config.headers['AUTH_BY_TOKEN'] = localStorage['token'];
+                config.headers['AUTH_BY_TOKEN'] = sessionStorage['token'];
                 return config;
             },
 

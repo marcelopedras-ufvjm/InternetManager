@@ -68,11 +68,11 @@ mainApp.service('loginSession',['$http','loginStatus', function($http,loginStatu
     };
 
     this.getUser = function() {
-        return localStorage['user'];
+        return sessionStorage['user'];
     };
 
     this.getToken = function() {
-        return localStorage['token'];
+        return sessionStorage['token'];
     };
 
     this.hasLoginError = function(){
