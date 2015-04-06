@@ -2,22 +2,27 @@ require_relative './models/user'
 require_relative './models/connection'
 require_relative './models/connection_history'
 
-if ENV['APP_ENVIRONMENT'] == 'production'
-  DataMapper.setup(:default, "sqlite3://#{Dir.pwd}/production.db")
-elsif ENV['APP_ENVIRONMENT'] == 'test'
-  DataMapper.setup(:default, "sqlite3://#{Dir.pwd}/test.db")
-else
-  DataMapper.setup(:default, "sqlite3://#{Dir.pwd}/development.db")
-end
+env = ARGV[0]
+path =  "sqlite3://#{Dir.pwd}"
 
+puts path
+
+if env == 'production'
+  DataMapper.setup(:default, "#{path}/production.db")
+elsif env == 'test'
+  DataMapper.setup(:default, "#{path}/test.db")
+else
+  DataMapper.setup(:default, "#{path}/development.db")
+end
 
 u=User.first(username: 'automatic')
 u = User.new unless u
 
 u.username = 'automatic'
-u.password = ENV['AUTOMATIC_PW']
+u.password = ENV['AUTOMATIC_PW']  #'123456'
 u.create_token
 u.refresh_time_live
+puts "usuario valido? #{u.valid?}"
 u.save
 
 c1=Connection.first(room_name: 'lab1')
