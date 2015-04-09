@@ -5,21 +5,37 @@ require 'json'
 require 'rest_client'
 
 class ConnectionController < ApplicationController
-  # get '/internet' do
-  #   Log.instance.info('teste')
-  #   'internet'
-  # end
-
-  # get '/searchbygroup/:group' do
-  #   content_type :json
-  #   group = params[:group]
-  #   ldap = LdapSearch.new
-  #   result = ldap.search_by_group group
-  #   result.to_json
-  # end
 
   before do
     content_type :json
+
+    skip_check_token_paths = %w"
+    /connection/squid_sync
+    "
+    begin
+      if skip_check_token_paths.include? request.path
+        squid_key =  params['squid_key']
+        authorized? squid_key
+      end
+    rescue => e
+      to_halt
+    end
+  end
+
+  def authorized? squid_key
+    unless squid_key == ENV['SQUID_KEY'] #App.settings.squid_key
+      to_halt
+    end
+  end
+
+  def to_halt
+    content_type :json
+    resp = {
+        'authorized' => false,
+        'error' => 'Invalid Squid key.'
+    }
+
+    halt(401,resp.to_json)
   end
 
   get '/list' do
@@ -50,7 +66,8 @@ class ConnectionController < ApplicationController
   end
 
   post '/squid_sync' do
-    squid_key = params['squid_key']
+    #squid_key = params['squid_key']
+    #puts squid_key
     data = params['data']
     labs=JSON.parse(data)
     Connection.sync(labs)

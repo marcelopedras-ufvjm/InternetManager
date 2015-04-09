@@ -116,8 +116,8 @@ class Connection
     #write to squid
     if connections_hashs.empty?
       data = Connection.format_to_squid
-      #TODO - Mudar squid_key para enviroment e usar algum esquema de criptografia
-      squid_key = '1234'
+      #TODO - usar algum esquema de criptografia
+      squid_key = ENV['SQUID_KEY']#'1234'
       RestClient.post("#{ENV['SQUID_HOST']}:9898/sync", :params =>{:data => data.to_json, :squid_key => squid_key})
     else
     #write from squid
@@ -171,12 +171,6 @@ class Connection
     connections
   end
 
-  # def self.squid_sync
-  #   data = Connection.format_to_squid
-  #   #TODO - Passar para variável de ambiente
-  #   squid_key = '1234'
-  #   RestClient.post('192.168.1.41:9898/squid_reconfigure', :params =>{:labs => data.to_json, :squid_key => squid_key})
-  # end
 end
 
 #DataMapper.finalize

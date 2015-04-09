@@ -54,15 +54,4 @@ class LoginController < ApplicationController
     end
     resp.to_json
   end
-
-  # get '/authenticated' do
-  #   content_type :json
-  #   result = authorized?
-  #   {authenticated: result}.to_json
-  # end
-
-  post '/test' do
-    data = params
-    data.to_json
-  end
 end
